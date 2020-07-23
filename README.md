@@ -2,6 +2,7 @@
 *[Ray Jasson](holmesqueen2070@yahoo.com)*<br>
 *24/07/2020*<br>
 
+<br>
 
 ## :notebook: Background of Presentation Scheduling Problem
 
@@ -32,6 +33,8 @@ Each presentation is presented by a speaker and supervised by three supervisors.
   - *SC02*: Number of days in which a supervisor needs to attend a presentation should not exceed supervisor’s preference
   - *SC03*: Some supervisors prefer not to change venue while attending consecutive presentations
 
+<br>
+
 ## :open_file_folder: Data Input
 
 In this repository, there are `n = 118` presentations, `m = 300` slots and `k = 47` supervisors. There are 4 venues: Viva Room (VR), Meeting Room (MR), Interaction Room (IR) and BJIM Discussion Room (BJIM). Each day has 15 slots in which each slot lasts for 30 minutes. 300 slots are shceduled from Monday until Friday.
@@ -47,6 +50,8 @@ There are 6 input files:
 - `SC02` specifies supervisors' preferred number of days to complete all the presentations
 - `SC03` specifies supervisors' preferences of changing venue during consecutive presentations, `yes` indicates supervisors prefer to attend consecutive presentations without changing venue, whereas `no` indicates supervisors do not want to change venue while attending consecutive presentations
 
+<br>
+
 ## :black_nib: Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm 
 
 Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combination of genetic algorithm (GA) with simulated annealing as a local search method to accelerate the convergence speed. The figure below shows the flowchart of HGASA algorithm.
@@ -55,6 +60,8 @@ Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combinatio
 <p align="center"><i>Flowchart of HGASA algorithm</i></p>
 
 Refer to `hybrid_system` function in `hybrid_system.py` for more details.
+
+<br>
 
 ### :black_nib: Encoding
 
@@ -65,6 +72,8 @@ The initial set of candidate solutions and sets of constraints are represented u
 
 The `slot-by-presentation` matrix is the chromosome in genetic algorithm and the candidate in simulated annealing. Other matrices are required by the penalty function for evaluation of penalty points. `0` indicates the slots are available, whereas `-1` indicates the slots are unavailable due to the hard constraints. When initializing the population, `1` indicates a presentation has been assigned to a specific slot.
 
+<br>
+
 ### :black_nib: Penalty Function
 
 The penalty function is used to evaluate the fitness of the solution, which is the resulting presentation schedule. It is used to evaluate any violations of `HC02`, `SC01`, `SC02` and `SC03`. Each violation increases the penalty points by 10. The higher the penalty points, the lower the fitness of the solution.
@@ -72,6 +81,8 @@ The penalty function is used to evaluate the fitness of the solution, which is t
 :unlock: ***Note that if the number of consecutive presentations is less than the supervisor's preference, each difference will increase the penalty point by 1 in order to encourage the generated schedule to have consecutive presentations.***
 
 Refer to `penalty_function.py` for more details.
+
+<br>
 
 ### :black_nib: Steady-State Genetic Algorithm (GA)
 
@@ -125,6 +136,8 @@ Two chromosomes with the highest penalty points are replaced by two new child ch
 
 Refer to `replacement` and `reproduction` functions in `genetic_algorithm.py` for more details.
 
+<br>
+
 ### :black_nib: Simulated Annealing (SA)
 
 [Simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing) (SA) is used in HGASA algorithm as a local search algorithm. SA is a metaheuristic inspired by statistical physics. SA has the ability to avoid being trapped in local minima and it is proven that SA is able to find the global optimum if given infinite time.
@@ -140,13 +153,13 @@ The initial candidate of SA is the chromosome with the lowest penalty point from
 
 In each iteration, one neighbourhood structure will be randomly selected to be applied to the candidate solution to produce a neighbouring solution. A neighbouring solution is a solution that is slightly different from the candidate solution. There are in total four neighbourhood structures implemented:
 
-- **Neighbourhood Structure 1**
+- **Neighbourhood Structure 1**<br>
 Select a supervisor at random and swap the timeslots of two presentations supervised by the supervisor
-- **Neighbourhood Structure 2**
+- **Neighbourhood Structure 2**<br>
 Select a presentation at random and change its assigned venue without changing the assigned day and time
-- **Neighbourhood Structure 3**
+- **Neighbourhood Structure 3**<br>
 Select a presentation at random and move it to a randomly selected empty slot
-- **Neighbourhood Structure 4**
+- **Neighbourhood Structure 4**<br>
 Select a presentation at random and move another presentation that has at least one same supervisor to the empty slot adjacent to the presentation chosen at random
 
 Refer to `neighbourhood_structure1`, `neighbourhood_structure2`, `neighbourhood_structure3` and `neighbourhood_structure4` functions in `simulated_annealing.py` for more details.
@@ -157,17 +170,19 @@ Refer to `neighbourhood_structure1`, `neighbourhood_structure2`, `neighbourhood_
 
 SA is carried out for a number of iterations until stopping criterion has been met. The procedure is described by the following steps:
 
-1. **Set Initial Annealing Temperature**
+1. **Set Initial Annealing Temperature**<br>
 The initial temperature of simulated annealing is set to the difference between the lowest and highest penalty points of the population found using GA.
 2. **Apply Random Neighbourhood Structure**
-3. **Penalty and Acceptance Probability**
+3. **Penalty and Acceptance Probability**<br>
 The penalty of the newly generated neighbouring solution is computed and compared with the penalty of the candidate solution. The neighbouring solution is accepted if it is better than the candidate solution. In the case where there is no improvement, a random number, `R` that is uninformedly distributed between 0 and 1 is generated and the probability density function value, <i>e</i><sup>-<i>&delta;/T</i></sup> is calculated. If the probability density function value is higher than `R`, the neighbouring solution is accepted as the candidate solution to generate a new neighbouring solution.
-4. **Cooling Schedule**
+4. **Cooling Schedule**<br>
 An exponential cooling scheme (ECS) is used. The temperature decrement rule implemented is <i>T</i><sub><i>k</i> + 1</sub> = <i>&alpha;T<sub>k</sub></i> where &alpha is set to 0.9999, a value very close to 1. The temperature is decreased slowly and continuously.
-5. **Final Temperature**
+5. **Final Temperature**<br>
 The final temperature is the stopping condition. The final temperature is set to 0.0001 of the initial temperature.
 
 Refer to `anneal` function in `simulated_annealing.py` for more details.
+
+<br>
 
 ## :speech_balloon: Implementation in Python
 
@@ -181,6 +196,8 @@ Matplotlib is a comprehensive library to create interactive visualizations in Py
 - [PrettyTable](http://zetcode.com/python/prettytable/)
 PrettyTable can be used to visualize tabular data in ASCII table format. It is used to draw the timetable for the presentation schedule.
 
+<br>
+
 ## :chart_with_upwards_trend: Experimental Results
 
 The table below shows the experimental result of running HGASA algorithm using the given input files where there are `n = 118` presentations, `m = 300` slots and `k = 47` supervisors. 
@@ -189,7 +206,6 @@ Experimental Run | Run 1 | Run 2 | Run 3
 ---------------- | ----- | ----- | -----
 Hard Constraints Violated | 0 | 0 | 0
 Soft Constraints Violated | 2 | 1 | 2
-Hard Constraints Violated | 0 | 0 | 0
 Penalty Points | 255 | 245 | 245
 Runtime (seconds) | 62.60 | 55.75 | 54.02
 
@@ -206,6 +222,8 @@ A graph of penalty points over number of iterations will be saved in `png` forma
 
 Refer to `write` function in `data.py` for more details.
 
+<br>
+
 ## :computer: Program Execution
 
 Windows commands for Python package installation:
@@ -220,6 +238,8 @@ There should be a folder named `input_files` in the same directory that contains
 Run `hybrid_system.py`.
 
 :unlock: ***Modify*** `data.py` ***and*** `input_files` ***for other data formats, such as*** `json` ***or*** `txt`.
+
+<br>
 
 ## :black_nib: Reference
 
