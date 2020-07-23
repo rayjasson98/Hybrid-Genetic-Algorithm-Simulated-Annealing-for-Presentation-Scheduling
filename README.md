@@ -187,13 +187,13 @@ Refer to `anneal` function in `simulated_annealing.py` for more details.
 ## :speech_balloon: Implementation in Python
 
 Four external packages are used to implement HGASA algorithm:
-- [NumPy](https://numpy.org/devdocs/index.html)
+- [NumPy](https://numpy.org/devdocs/index.html)<br>
 NumPy provides a powerful n-dimensional array structure and numerical computing tools. It is ideal to create matrix, and has a significantly faster data access speed and more efficient memory usage than Python list.
-- [Numba](https://numba.pydata.org/numba-doc/latest/user/5minguide.html)
+- [Numba](https://numba.pydata.org/numba-doc/latest/user/5minguide.html)<br>
 Numba is a just-in-time (JIT) compiler for Python that can speed up the execution of code that uses NumPy arrays and functions, and loops frequently. Parts of user-defined functions in Python are preceded with `@njit(cache=True)` decorator. `@njit()` compiles the decorated function in nopython mode so the compiled code runs without the involvement of Python interpreter. `cache=True` indicates the result of function compilation will be saved into a file-based cache to save compilation time when invoking decorated functions.
-- [Matplotlib](https://matplotlib.org/api/index.html)
+- [Matplotlib](https://matplotlib.org/api/index.html)<br>
 Matplotlib is a comprehensive library to create interactive visualizations in Python. One of its API, pyplot is used to create interactive plots in a figure. The interactive plot shows the graph of penalty points improvement over the number of iterations in HGASA. The graph can be zoomed, panned, configured and saved as a figure.
-- [PrettyTable](http://zetcode.com/python/prettytable/)
+- [PrettyTable](http://zetcode.com/python/prettytable/)<br>
 PrettyTable can be used to visualize tabular data in ASCII table format. It is used to draw the timetable for the presentation schedule.
 
 <br>
@@ -213,7 +213,7 @@ Runtime (seconds) | 62.60 | 55.75 | 54.02
 
 The generated presentation schedule is in `csv` format as shown below:
 `P9, null, null, P48, P36, null, ...`
-The fragmented schedule above indicates that `P9`, `P48` and `P36` are scheduled in `slot 1`, `slot 4` and `slot 5` respectively. `null` indicates no presentation is scheduled for a particular slot.
+The fragmented schedule above indicates that `P9`, `P48` and `P36` are scheduled for `slot 1`, `slot 4` and `slot 5` respectively. `null` indicates no presentation is scheduled for a particular slot.
 
 A graph of penalty points over number of iterations will be saved in `png` format. An example of the graph is shown below. The graph illustrates the improvement of presentation scheduling as number of iterations increases.
 
