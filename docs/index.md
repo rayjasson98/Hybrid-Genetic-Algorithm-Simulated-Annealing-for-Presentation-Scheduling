@@ -40,7 +40,7 @@ Each presentation is presented by a speaker and supervised by three supervisors.
 
 In this repository, there are `n = 118` presentations, `m = 300` slots and `k = 47` supervisors. There are 4 venues: Viva Room (VR), Meeting Room (MR), Interaction Room (IR) and BJIM Discussion Room (BJIM). Each day has 15 slots in which each slot lasts for 30 minutes. 300 slots are shceduled from Monday until Friday.
 
-:unlock: ***Note that each slot is a combination of a venue and a timeslot.***
+***Note that each slot is a combination of a venue and a timeslot.***
 
 There are 6 input files:
 
@@ -79,7 +79,7 @@ The `slot-by-presentation` matrix is the chromosome in genetic algorithm and the
 
 The penalty function is used to evaluate the fitness of the solution, which is the resulting presentation schedule. It is used to evaluate any violations of `HC02`, `SC01`, `SC02` and `SC03`. Each violation increases the penalty points by 10. The higher the penalty points, the lower the fitness of the solution.
 
-:unlock: ***Note that if the number of consecutive presentations is less than the supervisor's preference, each difference will increase the penalty point by 1 in order to encourage the generated schedule to have consecutive presentations.***
+***Note that if the number of consecutive presentations is less than the supervisor's preference, each difference will increase the penalty point by 1 in order to encourage the generated schedule to have consecutive presentations.***
 
 Refer to `penalty_function.py` for more details.
 
@@ -210,7 +210,7 @@ Soft Constraints Violated | 2 | 1 | 2
 Penalty Points | 255 | 245 | 245
 Runtime (seconds) | 62.60 | 55.75 | 54.02
 
-:unlock: ***Note that all the parameters used in HGASA algorithm are purely empirical and should be adjusted for other problems.***
+***Note that all the parameters used in HGASA algorithm are purely empirical and should be adjusted for other problems.***
 
 The generated presentation schedule is in `csv` format as shown below:
 `P9, null, null, P48, P36, null, ...`
