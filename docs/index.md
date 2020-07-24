@@ -57,7 +57,7 @@ There are 6 input files:
 
 Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combination of genetic algorithm (GA) with simulated annealing as a local search method to accelerate the convergence speed. The figure below shows the flowchart of HGASA algorithm.
 
-<p align=center><img src="/pics/HGASA_Flowchart.png" width=70% height=70%></p>
+<p align=center><img src="/docs/pics/HGASA_Flowchart.png" width=70% height=70%></p>
 <p align="center"><i>Flowchart of HGASA algorithm</i></p>
 
 Refer to `hybrid_system` function in `hybrid_system.py` for more details.
@@ -68,7 +68,7 @@ Refer to `hybrid_system` function in `hybrid_system.py` for more details.
 
 The initial set of candidate solutions and sets of constraints are represented using matrix. The matrices are generated using given data from input files and through the process of matrix multiplication. The figure below shows three required matrices that are generated through `load()` function in `data.py`.
 
-<p align=center><img src="/pics/matrices.png" width=70% height=70%></p>
+<p align=center><img src="/docs/pics/matrices.png" width=70% height=70%></p>
 <p align="center"><i>From left, slot-by-presentation matrix, presentation-by-presentation matrix and supervisor-by-preference matrix</i></p>
 
 The `slot-by-presentation` matrix is the chromosome in genetic algorithm and the candidate in simulated annealing. Other matrices are required by the penalty function for evaluation of penalty points. `0` indicates the slots are available, whereas `-1` indicates the slots are unavailable due to the hard constraints. When initializing the population, `1` indicates a presentation has been assigned to a specific slot.
@@ -111,7 +111,7 @@ Refer to `selection` function in `genetic_algorithm.py` for more details.
 
 Two-point crossover is carried out to reduce the probability of breaking up good pairs in the chromosome which is more frequent in one-point crossover and uniform crossover. The parent chromosomes selected in tournament selection exchange their presentations between the cutpoints to produce two new children. The figure below shows two parent chromosomes exchange their presentations between `c1` and `c2` to generate two new child chromosomes.
 
-<p align=center><img src="/pics/crossover.png" width=90% height=90%></p>
+<p align=center><img src="/docs/pics/crossover.png" width=90% height=90%></p>
 <p align="center"><i>Crossover of two parent chromosomes</i></p>
 
 Repair is carried out after crossover in which the presentation is assigned to another available and empty slot if there are more than 1 presentations assigned for the slot. The purpose of this operation is to ensure `HC01` and `HC05` are not violated.
@@ -124,7 +124,7 @@ Refer to `crossover` and `repair` functions in `genetic_algorithm.py` for more d
 
 Two random presentations have their slots exchanged. If both presentations have slots that are not exchangeable, indicating the slots are unavailable for either one of the presentation, another presentation and slot are selected randomly. The figure below shows the mutation process.
 
-<p align=center><img src="/pics/mutation.png" width=50% height=50%></p>
+<p align=center><img src="/docs/pics/mutation.png" width=50% height=50%></p>
 <p align="center"><i>Mutation of a chromosome</i></p>
 
 Refer to `mutation` function in `genetic_algorithm.py` for more details.
@@ -145,7 +145,7 @@ Refer to `replacement` and `reproduction` functions in `genetic_algorithm.py` fo
 
 The initial candidate of SA is the chromosome with the lowest penalty point from the previous GA. The basic procedure of SA is to generate neighbouring solutions and evaluate them. If the neighbouring solution generated is better than the best solution, the best solution is updated. If otherwise, the neighbouring solution is accepted based on a probability density function. The best solution will only be updated when the neighbouring solution is better than the best solution. A poor neighbouring solution will be accepted by probability as the candidate to generate a new neighbouring solution, but not as the best solution. The figure below shows the process of SA.
 
-<p align=center><img src="/pics/simulated_annealing.png" width=80% height=80%></p>
+<p align=center><img src="/docs/pics/simulated_annealing.png" width=80% height=80%></p>
 <p align="center"><i>Process of Simulated Annealing</i></p>
 
 -----------------------------------
