@@ -1,5 +1,6 @@
 # Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling
 *[Ray Jasson](mailto:holmesqueen2070@yahoo.com)*<br>
+*[Kang Yi Qing](mailto:yiqng0519@gmail.com)*<br>
 *24/07/2020*<br>
 
 <br>
@@ -230,7 +231,7 @@ Windows commands for Python package installation:
 
 - `NumPy` $ pip install numpy
 - `Numba` $ pip install numba
-- `Matplotlib` $ pip install -U matplotlib
+- `Matplotlib` $ pip install matplotlib
 - `PrettyTable` $ pip install PTable
 
 There should be a folder named `input_files` in the same directory that contains all the `csv` files (`SupExaAssign.csv`, `HC03.csv`, `HC04.csv`, `SC01.csv`, `SC02.csv` and `SC03.csv`). 
