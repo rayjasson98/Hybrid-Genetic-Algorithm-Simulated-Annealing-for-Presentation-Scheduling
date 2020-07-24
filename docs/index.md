@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling
 *[Ray Jasson](mailto:holmesqueen2070@yahoo.com)*<br>
 *[Yi Qing](mailto:yiqing0519@gmail.com)*<br>
