@@ -278,7 +278,7 @@ Run `hybrid_system.py`.
 
 - Luke, S. (2015, October). Essentials of Metaheuristics. Retrieved June 8, 2020, from https://cs.gmu.edu/~sean/book/metaheuristics/Essentials.pdf
 - Kohshori, M. S., & Abadeh, M. S. (2012, March). Hybrid Genetic Algorithms for University Course Timetabling. IJCSI International Journal of Computer Science, 9(2), 446-455.
-- https://github.com/Baksonator/evolutionary-timetable-scheduling
-- https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II
-- https://stackoverflow.com/a/8578980/10661805
-- http://sferics.idsia.ch/Files/ttcomp2002/results.htm
+- [Evolutionary Timetable Scheduling in Python](https://github.com/Baksonator/evolutionary-timetable-scheduling)
+- [Nice Introduction to Genetic Algorithm on GitHub](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II)
+- [Algorithm for creating a school timetable on Stack Overflow](https://stackoverflow.com/a/8578980/10661805)
+- [International Timetabling Competition 2002 Results](http://sferics.idsia.ch/Files/ttcomp2002/results.htm)
