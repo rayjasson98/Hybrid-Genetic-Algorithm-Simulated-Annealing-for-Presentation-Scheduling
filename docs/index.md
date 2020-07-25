@@ -1,256 +1,381 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="en-US"><head>
+    
 
-# Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling
-*[Ray Jasson](mailto:holmesqueen2070@yahoo.com)*<br>
-*[Yi Qing](mailto:yiqing0519@gmail.com)*<br>
-*24/07/2020*<br>
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This repository demonstrates how the Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), can be solved using the Hybrid Genetic Algorithm-Simulated Annealing (HGASA) algorithm." />
+<meta property="og:description" content="This repository demonstrates how the Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), can be solved using the Hybrid Genetic Algorithm-Simulated Annealing (HGASA) algorithm." />
+<link rel="canonical" href="https://rayjasson98.github.io/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling/" />
+<meta property="og:url" content="https://rayjasson98.github.io/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling/" />
+<meta property="og:site_name" content="Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling" />
+<meta name="google-site-verification" content="Di5iGlRw_ZibJ0hmbv7MCgI8wnpTb6QbsO2OYIP7vQI" />
+<script type="application/ld+json">
+{"@type":"WebSite","headline":"Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling","url":"https://rayjasson98.github.io/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling/","description":"This repository demonstrates how the Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), can be solved using the Hybrid Genetic Algorithm-Simulated Annealing (HGASA) algorithm.","name":"Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
 
-<br>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#157878" />
+    <link rel="stylesheet" href="/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling/assets/css/style.css?v=e7a9ca08f02d75148f4ffe96203d387ff3e19211" />
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling</h1>
+      <h2 class="project-tagline">This repository demonstrates how the Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), can be solved using the Hybrid Genetic Algorithm-Simulated Annealing (HGASA) algorithm.</h2>
+      
+        <a href="https://github.com/rayjasson98/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling" class="btn">View on GitHub</a>
+      
+      
+    </section>
 
-## Background of Presentation Scheduling Problem
+    <section class="main-content">
+      <h1 id="hybrid-genetic-algorithm-simulated-annealing-hgasa-algorithm-for-presentation-scheduling">Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling</h1>
+<p><em><a href="mailto:holmesqueen2070@yahoo.com">Ray Jasson</a></em><br />
+<em><a href="mailto:yiqing0519@gmail.com">Yi Qing</a></em><br />
+<em>24/07/2020</em><br /></p>
 
-Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), involves allocating a set of presentations and resources including speakers, supervisors and venues to different time slots while considering various constraints. Supervisors have different preferences including choosing to attend certain number of consecutive presentations, choosing number of days to complete all the presentations and deciding whether they want to change venue while attending consecutive presentations. The problem is defined according to the following groups:
+<p><br /></p>
 
-- Presentations
-- Slots (Time slots and Venues)
-- Supervisors
-- Preferences
+<h2 id="background-of-presentation-scheduling-problem">Background of Presentation Scheduling Problem</h2>
 
-`n` presentations will be scheduled to `m` slots in which each slot is a combination of a venue and a time slot. For example, the timetable below has a total of 10 slots for 2 venues:
+<p>Presentation Scheduling problem, which is analogous to the famous University Course Timetabling Problem (UCTP), involves allocating a set of presentations and resources including speakers, supervisors and venues to different time slots while considering various constraints. Supervisors have different preferences including choosing to attend certain number of consecutive presentations, choosing number of days to complete all the presentations and deciding whether they want to change venue while attending consecutive presentations. The problem is defined according to the following groups:</p>
 
-Day | Venue | 0900-1000 | 1000-1100 | 1100-1200 | 1300-1400 | 1400-1500
---- | ----- | --------- | --------- | --------- | --------- | ---------
-Monday | Room A | 1 | 2 | 3 | 4 | 5
-Monday | Room B | 6 | 7 | 8 | 9 | 10
+<ul>
+  <li>Presentations</li>
+  <li>Slots (Time slots and Venues)</li>
+  <li>Supervisors</li>
+  <li>Preferences</li>
+</ul>
 
-Each presentation is presented by a speaker and supervised by three supervisors. There are `k` supervisors available. There are two types of constraints: hard constraints and soft constraints. Hard constraints cannot be violated to prevent generating an infeasible schedule, whereas soft constraints might be violated, however, the number of violations must be minimized.
+<p><code class="language-plaintext highlighter-rouge">n</code> presentations will be scheduled to <code class="language-plaintext highlighter-rouge">m</code> slots in which each slot is a combination of a venue and a time slot. For example, the timetable below has a total of 10 slots for 2 venues:</p>
 
-- **Hard Constraints**
-  - *HC01*: All presentations must be scheduled and each presentation can be scheduled only once
-  - *HC02*: No supervisors can attend two or more presentations concurrently
-  - *HC03*: Some venues are unavailable on specific time slots
-  - *HC04*: Some supervisors are unavailable on specific time slots
-  - *HC05*: All presentations must be scheduled to a slot without sharing of venues
-- **Soft Constraints**
-  - *SC01*: Number of consecutive presentations should not exceed supervisor’s preference
-  - *SC02*: Number of days in which a supervisor needs to attend a presentation should not exceed supervisor’s preference
-  - *SC03*: Some supervisors prefer not to change venue while attending consecutive presentations
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Venue</th>
+      <th>0900-1000</th>
+      <th>1000-1100</th>
+      <th>1100-1200</th>
+      <th>1300-1400</th>
+      <th>1400-1500</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Monday</td>
+      <td>Room A</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Monday</td>
+      <td>Room B</td>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
 
-<br>
+<p>Each presentation is presented by a speaker and supervised by three supervisors. There are <code class="language-plaintext highlighter-rouge">k</code> supervisors available. There are two types of constraints: hard constraints and soft constraints. Hard constraints cannot be violated to prevent generating an infeasible schedule, whereas soft constraints might be violated, however, the number of violations must be minimized.</p>
 
-## Data Input
+<ul>
+  <li><strong>Hard Constraints</strong>
+    <ul>
+      <li><em>HC01</em>: All presentations must be scheduled and each presentation can be scheduled only once</li>
+      <li><em>HC02</em>: No supervisors can attend two or more presentations concurrently</li>
+      <li><em>HC03</em>: Some venues are unavailable on specific time slots</li>
+      <li><em>HC04</em>: Some supervisors are unavailable on specific time slots</li>
+      <li><em>HC05</em>: All presentations must be scheduled to a slot without sharing of venues</li>
+    </ul>
+  </li>
+  <li><strong>Soft Constraints</strong>
+    <ul>
+      <li><em>SC01</em>: Number of consecutive presentations should not exceed supervisor’s preference</li>
+      <li><em>SC02</em>: Number of days in which a supervisor needs to attend a presentation should not exceed supervisor’s preference</li>
+      <li><em>SC03</em>: Some supervisors prefer not to change venue while attending consecutive presentations</li>
+    </ul>
+  </li>
+</ul>
 
-In this repository, there are `n = 118` presentations, `m = 300` slots and `k = 47` supervisors. There are 4 venues: Viva Room (VR), Meeting Room (MR), Interaction Room (IR) and BJIM Discussion Room (BJIM). Each day has 15 slots in which each slot lasts for 30 minutes. 300 slots are shceduled from Monday until Friday.
+<p><br /></p>
 
-***Note that each slot is a combination of a venue and a timeslot.***
+<h2 id="data-input">Data Input</h2>
 
-There are 6 input files:
+<p>In this repository, there are <code class="language-plaintext highlighter-rouge">n = 118</code> presentations, <code class="language-plaintext highlighter-rouge">m = 300</code> slots and <code class="language-plaintext highlighter-rouge">k = 47</code> supervisors. There are 4 venues: Viva Room (VR), Meeting Room (MR), Interaction Room (IR) and BJIM Discussion Room (BJIM). Each day has 15 slots in which each slot lasts for 30 minutes. 300 slots are shceduled from Monday until Friday.</p>
 
-- `SupExaAssign.csv` specifies supervisors that are in charge of the presentations
-- `HC03` specifies unavailable venues
-- `HC04` specifies unavailable supervisors on specific slots
-- `SC01` specifies supervisors' preferred number of consecutive presentations
-- `SC02` specifies supervisors' preferred number of days to complete all the presentations
-- `SC03` specifies supervisors' preferences of changing venue during consecutive presentations, `yes` indicates supervisors prefer to attend consecutive presentations without changing venue, whereas `no` indicates supervisors do not want to change venue while attending consecutive presentations
+<p><strong><em>Note that each slot is a combination of a venue and a timeslot.</em></strong></p>
 
-<br>
+<p>There are 6 input files:</p>
 
-## Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm 
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SupExaAssign.csv</code> specifies supervisors that are in charge of the presentations</li>
+  <li><code class="language-plaintext highlighter-rouge">HC03</code> specifies unavailable venues</li>
+  <li><code class="language-plaintext highlighter-rouge">HC04</code> specifies unavailable supervisors on specific slots</li>
+  <li><code class="language-plaintext highlighter-rouge">SC01</code> specifies supervisors’ preferred number of consecutive presentations</li>
+  <li><code class="language-plaintext highlighter-rouge">SC02</code> specifies supervisors’ preferred number of days to complete all the presentations</li>
+  <li><code class="language-plaintext highlighter-rouge">SC03</code> specifies supervisors’ preferences of changing venue during consecutive presentations, <code class="language-plaintext highlighter-rouge">yes</code> indicates supervisors prefer to attend consecutive presentations without changing venue, whereas <code class="language-plaintext highlighter-rouge">no</code> indicates supervisors do not want to change venue while attending consecutive presentations</li>
+</ul>
 
-Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combination of genetic algorithm (GA) with simulated annealing as a local search method to accelerate the convergence speed. The figure below shows the flowchart of HGASA algorithm.
+<p><br /></p>
 
-<p align="center"><img src="./pics/HGASA_Flowchart.png"></p>
+<h2 id="hybrid-genetic-algorithm-simulated-annealing-hgasa-algorithm">Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm</h2>
+
+<p>Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combination of genetic algorithm (GA) with simulated annealing as a local search method to accelerate the convergence speed. The figure below shows the flowchart of HGASA algorithm.</p>
+
+<p align="center"><img src="./pics/HGASA_Flowchart.png" /></p>
 <p align="center"><i>Flowchart of HGASA algorithm</i></p>
 
-Refer to `hybrid_system` function in `hybrid_system.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">hybrid_system</code> function in <code class="language-plaintext highlighter-rouge">hybrid_system.py</code> for more details.</p>
 
-<br>
+<p><br /></p>
 
-### Encoding
+<h3 id="encoding">Encoding</h3>
 
-The initial set of candidate solutions and sets of constraints are represented using matrix. The matrices are generated using given data from input files and through the process of matrix multiplication. The figure below shows three required matrices that are generated through `load()` function in `data.py`.
+<p>The initial set of candidate solutions and sets of constraints are represented using matrix. The matrices are generated using given data from input files and through the process of matrix multiplication. The figure below shows three required matrices that are generated through <code class="language-plaintext highlighter-rouge">load()</code> function in <code class="language-plaintext highlighter-rouge">data.py</code>.</p>
 
-<p align="center"><img src="./pics/matrices.png"></p>
+<p align="center"><img src="./pics/matrices.png" /></p>
 <p align="center"><i>From left, slot-by-presentation matrix, presentation-by-presentation matrix and supervisor-by-preference matrix</i></p>
 
-The `slot-by-presentation` matrix is the chromosome in genetic algorithm and the candidate in simulated annealing. Other matrices are required by the penalty function for evaluation of penalty points. `0` indicates the slots are available, whereas `-1` indicates the slots are unavailable due to the hard constraints. When initializing the population, `1` indicates a presentation has been assigned to a specific slot.
+<p>The <code class="language-plaintext highlighter-rouge">slot-by-presentation</code> matrix is the chromosome in genetic algorithm and the candidate in simulated annealing. Other matrices are required by the penalty function for evaluation of penalty points. <code class="language-plaintext highlighter-rouge">0</code> indicates the slots are available, whereas <code class="language-plaintext highlighter-rouge">-1</code> indicates the slots are unavailable due to the hard constraints. When initializing the population, <code class="language-plaintext highlighter-rouge">1</code> indicates a presentation has been assigned to a specific slot.</p>
 
-<br>
+<p><br /></p>
 
-### Penalty Function
+<h3 id="penalty-function">Penalty Function</h3>
 
-The penalty function is used to evaluate the fitness of the solution, which is the resulting presentation schedule. It is used to evaluate any violations of `HC02`, `SC01`, `SC02` and `SC03`. Each violation increases the penalty points by 10. The higher the penalty points, the lower the fitness of the solution.
+<p>The penalty function is used to evaluate the fitness of the solution, which is the resulting presentation schedule. It is used to evaluate any violations of <code class="language-plaintext highlighter-rouge">HC02</code>, <code class="language-plaintext highlighter-rouge">SC01</code>, <code class="language-plaintext highlighter-rouge">SC02</code> and <code class="language-plaintext highlighter-rouge">SC03</code>. Each violation increases the penalty points by 10. The higher the penalty points, the lower the fitness of the solution.</p>
 
-***Note that if the number of consecutive presentations is less than the supervisor's preference, each difference will increase the penalty point by 1 in order to encourage the generated schedule to have consecutive presentations.***
+<p><strong><em>Note that if the number of consecutive presentations is less than the supervisor’s preference, each difference will increase the penalty point by 1 in order to encourage the generated schedule to have consecutive presentations.</em></strong></p>
 
-Refer to `penalty_function.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">penalty_function.py</code> for more details.</p>
 
-<br>
+<p><br /></p>
 
-### Steady-State Genetic Algorithm (GA)
+<h3 id="steady-state-genetic-algorithm-ga">Steady-State Genetic Algorithm (GA)</h3>
 
-[Steady-state genetic algorithm](https://www.cs.unm.edu/~neal.holts/dga/optimizationAlgorithms/steadyStateGA.html) is different from the generational genetic algorithm in which only two chromosomes are selected to undergo crossover and mutation to generate two children. Two worst chromosomes will be chosen from the population to be replaced by the new children. It updates the population in a piecemeal fashion rather than all at one time.
+<p><a href="https://www.cs.unm.edu/~neal.holts/dga/optimizationAlgorithms/steadyStateGA.html">Steady-state genetic algorithm</a> is different from the generational genetic algorithm in which only two chromosomes are selected to undergo crossover and mutation to generate two children. Two worst chromosomes will be chosen from the population to be replaced by the new children. It updates the population in a piecemeal fashion rather than all at one time.</p>
 
------------------------------------
+<hr />
 
-#### Initialize Population
+<h4 id="initialize-population">Initialize Population</h4>
 
-The size of population is initialized to 10 which is an adequate size considering the size of this presentation scheduling problem. A random slot is assigned to each presentation in a chromosome. Note that the slots are assigned in a way such that the schedule does not violate `HC03` and `HC04`. Empty slot indicates no presentation is assigned to this slot previously so `HC01` and `HC05` will not be violated. Each `1`s in the `slot-by-presentation` matrix (chromosome) represents the assigned presentation in its respective slot. Penalty of chromosome is evaluated and added to the population of penalty points.
+<p>The size of population is initialized to 10 which is an adequate size considering the size of this presentation scheduling problem. A random slot is assigned to each presentation in a chromosome. Note that the slots are assigned in a way such that the schedule does not violate <code class="language-plaintext highlighter-rouge">HC03</code> and <code class="language-plaintext highlighter-rouge">HC04</code>. Empty slot indicates no presentation is assigned to this slot previously so <code class="language-plaintext highlighter-rouge">HC01</code> and <code class="language-plaintext highlighter-rouge">HC05</code> will not be violated. Each <code class="language-plaintext highlighter-rouge">1</code>s in the <code class="language-plaintext highlighter-rouge">slot-by-presentation</code> matrix (chromosome) represents the assigned presentation in its respective slot. Penalty of chromosome is evaluated and added to the population of penalty points.</p>
 
-Refer to `generate_chromosome` function in `genetic_algorithm.py` and `hybrid_system.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">generate_chromosome</code> function in <code class="language-plaintext highlighter-rouge">genetic_algorithm.py</code> and <code class="language-plaintext highlighter-rouge">hybrid_system.py</code> for more details.</p>
 
------------------------------------
+<hr />
 
-#### Selection
+<h4 id="selection">Selection</h4>
 
-Tournament selection with tournament size of 2 is carried out twice. In each tournament selection, two random chromosomes are selected and the chromosome with the lowest penalty point among them is selected.
+<p>Tournament selection with tournament size of 2 is carried out twice. In each tournament selection, two random chromosomes are selected and the chromosome with the lowest penalty point among them is selected.</p>
 
-Refer to `selection` function in `genetic_algorithm.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">selection</code> function in <code class="language-plaintext highlighter-rouge">genetic_algorithm.py</code> for more details.</p>
 
------------------------------------
+<hr />
 
-#### Crossover and Repair
+<h4 id="crossover-and-repair">Crossover and Repair</h4>
 
-Two-point crossover is carried out to reduce the probability of breaking up good pairs in the chromosome which is more frequent in one-point crossover and uniform crossover. The parent chromosomes selected in tournament selection exchange their presentations between the cutpoints to produce two new children. The figure below shows two parent chromosomes exchange their presentations between `c1` and `c2` to generate two new child chromosomes.
+<p>Two-point crossover is carried out to reduce the probability of breaking up good pairs in the chromosome which is more frequent in one-point crossover and uniform crossover. The parent chromosomes selected in tournament selection exchange their presentations between the cutpoints to produce two new children. The figure below shows two parent chromosomes exchange their presentations between <code class="language-plaintext highlighter-rouge">c1</code> and <code class="language-plaintext highlighter-rouge">c2</code> to generate two new child chromosomes.</p>
 
-<p align="center"><img src="./pics/crossover.png"></p>
+<p align="center"><img src="./pics/crossover.png" /></p>
 <p align="center"><i>Crossover of two parent chromosomes</i></p>
 
-Repair is carried out after crossover in which the presentation is assigned to another available and empty slot if there are more than 1 presentations assigned for the slot. The purpose of this operation is to ensure `HC01` and `HC05` are not violated.
+<p>Repair is carried out after crossover in which the presentation is assigned to another available and empty slot if there are more than 1 presentations assigned for the slot. The purpose of this operation is to ensure <code class="language-plaintext highlighter-rouge">HC01</code> and <code class="language-plaintext highlighter-rouge">HC05</code> are not violated.</p>
 
-Refer to `crossover` and `repair` functions in `genetic_algorithm.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">crossover</code> and <code class="language-plaintext highlighter-rouge">repair</code> functions in <code class="language-plaintext highlighter-rouge">genetic_algorithm.py</code> for more details.</p>
 
------------------------------------
+<hr />
 
-#### Mutation
+<h4 id="mutation">Mutation</h4>
 
-Two random presentations have their slots exchanged. If both presentations have slots that are not exchangeable, indicating the slots are unavailable for either one of the presentation, another presentation and slot are selected randomly. The figure below shows the mutation process.
+<p>Two random presentations have their slots exchanged. If both presentations have slots that are not exchangeable, indicating the slots are unavailable for either one of the presentation, another presentation and slot are selected randomly. The figure below shows the mutation process.</p>
 
-<p align="center"><img src="./pics/mutation.png"></p>
+<p align="center"><img src="./pics/mutation.png" /></p>
 <p align="center"><i>Mutation of a chromosome</i></p>
 
-Refer to `mutation` function in `genetic_algorithm.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">mutation</code> function in <code class="language-plaintext highlighter-rouge">genetic_algorithm.py</code> for more details.</p>
 
------------------------------------
+<hr />
 
-#### Penalty Evaluation and Replacement
+<h4 id="penalty-evaluation-and-replacement">Penalty Evaluation and Replacement</h4>
 
-Two chromosomes with the highest penalty points are replaced by two new child chromosomes generated through crossover and mutation. Their penalty points are updated as well.The maximum number of generations is set to be `100` generations in this case. In each generation, 6 processes are executed iteratively: selection, crossover, repair, mutation, penalty evaluation and replacement until the maximum generation is reached.
+<p>Two chromosomes with the highest penalty points are replaced by two new child chromosomes generated through crossover and mutation. Their penalty points are updated as well.The maximum number of generations is set to be <code class="language-plaintext highlighter-rouge">100</code> generations in this case. In each generation, 6 processes are executed iteratively: selection, crossover, repair, mutation, penalty evaluation and replacement until the maximum generation is reached.</p>
 
-Refer to `replacement` and `reproduction` functions in `genetic_algorithm.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">replacement</code> and <code class="language-plaintext highlighter-rouge">reproduction</code> functions in <code class="language-plaintext highlighter-rouge">genetic_algorithm.py</code> for more details.</p>
 
-<br>
+<p><br /></p>
 
-### Simulated Annealing (SA)
+<h3 id="simulated-annealing-sa">Simulated Annealing (SA)</h3>
 
-[Simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing) (SA) is used in HGASA algorithm as a local search algorithm. SA is a metaheuristic inspired by statistical physics. SA has the ability to avoid being trapped in local minima and it is proven that SA is able to find the global optimum if given infinite time.
+<p><a href="https://en.wikipedia.org/wiki/Simulated_annealing">Simulated annealing</a> (SA) is used in HGASA algorithm as a local search algorithm. SA is a metaheuristic inspired by statistical physics. SA has the ability to avoid being trapped in local minima and it is proven that SA is able to find the global optimum if given infinite time.</p>
 
-The initial candidate of SA is the chromosome with the lowest penalty point from the previous GA. The basic procedure of SA is to generate neighbouring solutions and evaluate them. If the neighbouring solution generated is better than the best solution, the best solution is updated. If otherwise, the neighbouring solution is accepted based on a probability density function. The best solution will only be updated when the neighbouring solution is better than the best solution. A poor neighbouring solution will be accepted by probability as the candidate to generate a new neighbouring solution, but not as the best solution. The figure below shows the process of SA.
+<p>The initial candidate of SA is the chromosome with the lowest penalty point from the previous GA. The basic procedure of SA is to generate neighbouring solutions and evaluate them. If the neighbouring solution generated is better than the best solution, the best solution is updated. If otherwise, the neighbouring solution is accepted based on a probability density function. The best solution will only be updated when the neighbouring solution is better than the best solution. A poor neighbouring solution will be accepted by probability as the candidate to generate a new neighbouring solution, but not as the best solution. The figure below shows the process of SA.</p>
 
-<p align="center"><img src="./pics/simulated_annealing.png"></p>
+<p align="center"><img src="./pics/simulated_annealing.png" /></p>
 <p align="center"><i>Process of Simulated Annealing</i></p>
 
------------------------------------
+<hr />
 
-#### Random Neighbourhood Structure
+<h4 id="random-neighbourhood-structure">Random Neighbourhood Structure</h4>
 
-In each iteration, one neighbourhood structure will be randomly selected to be applied to the candidate solution to produce a neighbouring solution. A neighbouring solution is a solution that is slightly different from the candidate solution. There are in total four neighbourhood structures implemented:
+<p>In each iteration, one neighbourhood structure will be randomly selected to be applied to the candidate solution to produce a neighbouring solution. A neighbouring solution is a solution that is slightly different from the candidate solution. There are in total four neighbourhood structures implemented:</p>
 
-- **Neighbourhood Structure 1**<br>
-Select a supervisor at random and swap the timeslots of two presentations supervised by the supervisor
-- **Neighbourhood Structure 2**<br>
-Select a presentation at random and change its assigned venue without changing the assigned day and time
-- **Neighbourhood Structure 3**<br>
-Select a presentation at random and move it to a randomly selected empty slot
-- **Neighbourhood Structure 4**<br>
-Select a presentation at random and move another presentation that has at least one same supervisor to the empty slot adjacent to the presentation chosen at random
+<ul>
+  <li><strong>Neighbourhood Structure 1</strong><br />
+Select a supervisor at random and swap the timeslots of two presentations supervised by the supervisor</li>
+  <li><strong>Neighbourhood Structure 2</strong><br />
+Select a presentation at random and change its assigned venue without changing the assigned day and time</li>
+  <li><strong>Neighbourhood Structure 3</strong><br />
+Select a presentation at random and move it to a randomly selected empty slot</li>
+  <li><strong>Neighbourhood Structure 4</strong><br />
+Select a presentation at random and move another presentation that has at least one same supervisor to the empty slot adjacent to the presentation chosen at random</li>
+</ul>
 
-Refer to `neighbourhood_structure1`, `neighbourhood_structure2`, `neighbourhood_structure3` and `neighbourhood_structure4` functions in `simulated_annealing.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">neighbourhood_structure1</code>, <code class="language-plaintext highlighter-rouge">neighbourhood_structure2</code>, <code class="language-plaintext highlighter-rouge">neighbourhood_structure3</code> and <code class="language-plaintext highlighter-rouge">neighbourhood_structure4</code> functions in <code class="language-plaintext highlighter-rouge">simulated_annealing.py</code> for more details.</p>
 
------------------------------------
+<hr />
 
-#### :arrow_down_small: Step-by-Step Procedure
+<h4 id="arrow_down_small-step-by-step-procedure">:arrow_down_small: Step-by-Step Procedure</h4>
 
-SA is carried out for a number of iterations until stopping criterion has been met. The procedure is described by the following steps:
+<p>SA is carried out for a number of iterations until stopping criterion has been met. The procedure is described by the following steps:</p>
 
-1. **Set Initial Annealing Temperature**<br>
-The initial temperature of simulated annealing is set to the difference between the lowest and highest penalty points of the population found using GA.
-2. **Apply Random Neighbourhood Structure**
-3. **Penalty and Acceptance Probability**<br>
-The penalty of the newly generated neighbouring solution is computed and compared with the penalty of the candidate solution. The neighbouring solution is accepted if it is better than the candidate solution. In the case where there is no improvement, a random number, `R` that is uninformedly distributed between 0 and 1 is generated and the probability density function value, <i>e</i><sup>-<i>&delta;/T</i></sup> is calculated. If the probability density function value is higher than `R`, the neighbouring solution is accepted as the candidate solution to generate a new neighbouring solution.
-4. **Cooling Schedule**<br>
-An exponential cooling scheme (ECS) is used. The temperature decrement rule implemented is <i>T</i><sub><i>k</i> + 1</sub> = <i>&alpha;T<sub>k</sub></i> where &alpha is set to 0.9999, a value very close to 1. The temperature is decreased slowly and continuously.
-5. **Final Temperature**<br>
-The final temperature is the stopping condition. The final temperature is set to 0.0001 of the initial temperature.
+<ol>
+  <li><strong>Set Initial Annealing Temperature</strong><br />
+The initial temperature of simulated annealing is set to the difference between the lowest and highest penalty points of the population found using GA.</li>
+  <li><strong>Apply Random Neighbourhood Structure</strong></li>
+  <li><strong>Penalty and Acceptance Probability</strong><br />
+The penalty of the newly generated neighbouring solution is computed and compared with the penalty of the candidate solution. The neighbouring solution is accepted if it is better than the candidate solution. In the case where there is no improvement, a random number, <code class="language-plaintext highlighter-rouge">R</code> that is uninformedly distributed between 0 and 1 is generated and the probability density function value, <i>e</i><sup>-<i>δ/T</i></sup> is calculated. If the probability density function value is higher than <code class="language-plaintext highlighter-rouge">R</code>, the neighbouring solution is accepted as the candidate solution to generate a new neighbouring solution.</li>
+  <li><strong>Cooling Schedule</strong><br />
+An exponential cooling scheme (ECS) is used. The temperature decrement rule implemented is <i>T</i><sub><i>k</i> + 1</sub> = <i>αT<sub>k</sub></i> where &amp;alpha is set to 0.9999, a value very close to 1. The temperature is decreased slowly and continuously.</li>
+  <li><strong>Final Temperature</strong><br />
+The final temperature is the stopping condition. The final temperature is set to 0.0001 of the initial temperature.</li>
+</ol>
 
-Refer to `anneal` function in `simulated_annealing.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">anneal</code> function in <code class="language-plaintext highlighter-rouge">simulated_annealing.py</code> for more details.</p>
 
-<br>
+<p><br /></p>
 
-## Implementation in Python
+<h2 id="implementation-in-python">Implementation in Python</h2>
 
-Four external packages are used to implement HGASA algorithm:
-- [NumPy](https://numpy.org/devdocs/index.html)<br>
-NumPy provides a powerful n-dimensional array structure and numerical computing tools. It is ideal to create matrix, and has a significantly faster data access speed and more efficient memory usage than Python list.
-- [Numba](https://numba.pydata.org/numba-doc/latest/user/5minguide.html)<br>
-Numba is a just-in-time (JIT) compiler for Python that can speed up the execution of code that uses NumPy arrays and functions, and loops frequently. Parts of user-defined functions in Python are preceded with `@njit(cache=True)` decorator. `@njit()` compiles the decorated function in nopython mode so the compiled code runs without the involvement of Python interpreter. `cache=True` indicates the result of function compilation will be saved into a file-based cache to save compilation time when invoking decorated functions.
-- [Matplotlib](https://matplotlib.org/api/index.html)<br>
-Matplotlib is a comprehensive library to create interactive visualizations in Python. One of its API, pyplot is used to create interactive plots in a figure. The interactive plot shows the graph of penalty points improvement over the number of iterations in HGASA. The graph can be zoomed, panned, configured and saved as a figure.
-- [PrettyTable](http://zetcode.com/python/prettytable/)<br>
-PrettyTable can be used to visualize tabular data in ASCII table format. It is used to draw the timetable for the presentation schedule.
+<p>Four external packages are used to implement HGASA algorithm:</p>
+<ul>
+  <li><a href="https://numpy.org/devdocs/index.html">NumPy</a><br />
+NumPy provides a powerful n-dimensional array structure and numerical computing tools. It is ideal to create matrix, and has a significantly faster data access speed and more efficient memory usage than Python list.</li>
+  <li><a href="https://numba.pydata.org/numba-doc/latest/user/5minguide.html">Numba</a><br />
+Numba is a just-in-time (JIT) compiler for Python that can speed up the execution of code that uses NumPy arrays and functions, and loops frequently. Parts of user-defined functions in Python are preceded with <code class="language-plaintext highlighter-rouge">@njit(cache=True)</code> decorator. <code class="language-plaintext highlighter-rouge">@njit()</code> compiles the decorated function in nopython mode so the compiled code runs without the involvement of Python interpreter. <code class="language-plaintext highlighter-rouge">cache=True</code> indicates the result of function compilation will be saved into a file-based cache to save compilation time when invoking decorated functions.</li>
+  <li><a href="https://matplotlib.org/api/index.html">Matplotlib</a><br />
+Matplotlib is a comprehensive library to create interactive visualizations in Python. One of its API, pyplot is used to create interactive plots in a figure. The interactive plot shows the graph of penalty points improvement over the number of iterations in HGASA. The graph can be zoomed, panned, configured and saved as a figure.</li>
+  <li><a href="http://zetcode.com/python/prettytable/">PrettyTable</a><br />
+PrettyTable can be used to visualize tabular data in ASCII table format. It is used to draw the timetable for the presentation schedule.</li>
+</ul>
 
-<br>
+<p><br /></p>
 
-## Experimental Results
+<h2 id="experimental-results">Experimental Results</h2>
 
-The table below shows the experimental result of running HGASA algorithm using the given input files where there are `n = 118` presentations, `m = 300` slots and `k = 47` supervisors. 
+<p>The table below shows the experimental result of running HGASA algorithm using the given input files where there are <code class="language-plaintext highlighter-rouge">n = 118</code> presentations, <code class="language-plaintext highlighter-rouge">m = 300</code> slots and <code class="language-plaintext highlighter-rouge">k = 47</code> supervisors.</p>
 
-Experimental Run | Run 1 | Run 2 | Run 3
----------------- | ----- | ----- | -----
-Hard Constraints Violated | 0 | 0 | 0
-Soft Constraints Violated | 2 | 1 | 2
-Penalty Points | 255 | 245 | 245
-Runtime (seconds) | 62.60 | 55.75 | 54.02
+<table>
+  <thead>
+    <tr>
+      <th>Experimental Run</th>
+      <th>Run 1</th>
+      <th>Run 2</th>
+      <th>Run 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hard Constraints Violated</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Soft Constraints Violated</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Penalty Points</td>
+      <td>255</td>
+      <td>245</td>
+      <td>245</td>
+    </tr>
+    <tr>
+      <td>Runtime (seconds)</td>
+      <td>62.60</td>
+      <td>55.75</td>
+      <td>54.02</td>
+    </tr>
+  </tbody>
+</table>
 
-***Note that all the parameters used in HGASA algorithm are purely empirical and should be adjusted for other problems.***
+<p><strong><em>Note that all the parameters used in HGASA algorithm are purely empirical and should be adjusted for other problems.</em></strong></p>
 
-The generated presentation schedule is in `csv` format as shown below:
-`P9, null, null, P48, P36, null, ...`
-The fragmented schedule above indicates that `P9`, `P48` and `P36` are scheduled for `slot 1`, `slot 4` and `slot 5` respectively. `null` indicates no presentation is scheduled for a particular slot.
+<p>The generated presentation schedule is in <code class="language-plaintext highlighter-rouge">csv</code> format as shown below:
+<code class="language-plaintext highlighter-rouge">P9, null, null, P48, P36, null, ...</code>
+The fragmented schedule above indicates that <code class="language-plaintext highlighter-rouge">P9</code>, <code class="language-plaintext highlighter-rouge">P48</code> and <code class="language-plaintext highlighter-rouge">P36</code> are scheduled for <code class="language-plaintext highlighter-rouge">slot 1</code>, <code class="language-plaintext highlighter-rouge">slot 4</code> and <code class="language-plaintext highlighter-rouge">slot 5</code> respectively. <code class="language-plaintext highlighter-rouge">null</code> indicates no presentation is scheduled for a particular slot.</p>
 
-A graph of penalty points over number of iterations will be saved in `png` format. An example of the graph is shown below. The graph illustrates the improvement of presentation scheduling as number of iterations increases.
+<p>A graph of penalty points over number of iterations will be saved in <code class="language-plaintext highlighter-rouge">png</code> format. An example of the graph is shown below. The graph illustrates the improvement of presentation scheduling as number of iterations increases.</p>
 
-<p align="center"><img src="./pics/result_graph.png"></p>
+<p align="center"><img src="./pics/result_graph.png" /></p>
 <p align="center"><i>Graph of penalty points over number of iterations</i></p>
 
-Refer to `write` function in `data.py` for more details.
+<p>Refer to <code class="language-plaintext highlighter-rouge">write</code> function in <code class="language-plaintext highlighter-rouge">data.py</code> for more details.</p>
 
-<br>
+<p><br /></p>
 
-## Program Execution
+<h2 id="program-execution">Program Execution</h2>
 
-Windows commands for Python package installation:
+<p>Windows commands for Python package installation:</p>
 
-- `NumPy` $ pip install numpy
-- `Numba` $ pip install numba
-- `Matplotlib` $ pip install matplotlib
-- `PrettyTable` $ pip install PTable
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">NumPy</code> $ pip install numpy</li>
+  <li><code class="language-plaintext highlighter-rouge">Numba</code> $ pip install numba</li>
+  <li><code class="language-plaintext highlighter-rouge">Matplotlib</code> $ pip install matplotlib</li>
+  <li><code class="language-plaintext highlighter-rouge">PrettyTable</code> $ pip install PTable</li>
+</ul>
 
-There should be a folder named `input_files` in the same directory that contains all the `csv` files (`SupExaAssign.csv`, `HC03.csv`, `HC04.csv`, `SC01.csv`, `SC02.csv` and `SC03.csv`). 
+<p>There should be a folder named <code class="language-plaintext highlighter-rouge">input_files</code> in the same directory that contains all the <code class="language-plaintext highlighter-rouge">csv</code> files (<code class="language-plaintext highlighter-rouge">SupExaAssign.csv</code>, <code class="language-plaintext highlighter-rouge">HC03.csv</code>, <code class="language-plaintext highlighter-rouge">HC04.csv</code>, <code class="language-plaintext highlighter-rouge">SC01.csv</code>, <code class="language-plaintext highlighter-rouge">SC02.csv</code> and <code class="language-plaintext highlighter-rouge">SC03.csv</code>).</p>
 
-Run `hybrid_system.py`.
+<p>Run <code class="language-plaintext highlighter-rouge">hybrid_system.py</code>.</p>
 
-:unlock: ***Modify*** `data.py` ***and*** `input_files` ***for other data formats, such as*** `json` ***or*** `txt`.
+<p>:unlock: <strong><em>Modify</em></strong> <code class="language-plaintext highlighter-rouge">data.py</code> <strong><em>and</em></strong> <code class="language-plaintext highlighter-rouge">input_files</code> <strong><em>for other data formats, such as</em></strong> <code class="language-plaintext highlighter-rouge">json</code> <strong><em>or</em></strong> <code class="language-plaintext highlighter-rouge">txt</code>.</p>
 
-<br>
+<p><br /></p>
 
-## Reference
+<h2 id="reference">Reference</h2>
 
-- Luke, S. (2015, October). Essentials of Metaheuristics. Retrieved June 8, 2020, from https://cs.gmu.edu/~sean/book/metaheuristics/Essentials.pdf
-- Kohshori, M. S., & Abadeh, M. S. (2012, March). Hybrid Genetic Algorithms for University Course Timetabling. IJCSI International Journal of Computer Science, 9(2), 446-455.
-- https://github.com/Baksonator/evolutionary-timetable-scheduling
-- https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II
-- https://stackoverflow.com/a/8578980/10661805
-- http://sferics.idsia.ch/Files/ttcomp2002/results.htm
+<ul>
+  <li>Luke, S. (2015, October). Essentials of Metaheuristics. Retrieved June 8, 2020, from https://cs.gmu.edu/~sean/book/metaheuristics/Essentials.pdf</li>
+  <li>Kohshori, M. S., &amp; Abadeh, M. S. (2012, March). Hybrid Genetic Algorithms for University Course Timetabling. IJCSI International Journal of Computer Science, 9(2), 446-455.</li>
+  <li>https://github.com/Baksonator/evolutionary-timetable-scheduling</li>
+  <li>https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II</li>
+  <li>https://stackoverflow.com/a/8578980/10661805</li>
+  <li>http://sferics.idsia.ch/Files/ttcomp2002/results.htm</li>
+</ul>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/rayjasson98/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling">Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling</a> is maintained by <a href="https://github.com/rayjasson98">rayjasson98</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  
+
+</body></html>
