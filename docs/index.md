@@ -171,7 +171,7 @@ Refer to `neighbourhood_structure1`, `neighbourhood_structure2`, `neighbourhood_
 
 -----------------------------------
 
-#### :arrow_down_small: Step-by-Step Procedure
+#### Step-by-Step Procedure
 
 SA is carried out for a number of iterations until stopping criterion has been met. The procedure is described by the following steps:
 
