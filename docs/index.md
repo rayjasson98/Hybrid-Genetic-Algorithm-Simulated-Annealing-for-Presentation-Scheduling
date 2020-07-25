@@ -2,6 +2,13 @@
 layout: default
 ---
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="google-site-verification" content="Di5iGlRw_ZibJ0hmbv7MCgI8wnpTb6QbsO2OYIP7vQI" />
+  </head>
+</html>
+
 # Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling
 *[Ray Jasson](mailto:holmesqueen2070@yahoo.com)*<br>
 *[Yi Qing](mailto:yiqing0519@gmail.com)*<br>
