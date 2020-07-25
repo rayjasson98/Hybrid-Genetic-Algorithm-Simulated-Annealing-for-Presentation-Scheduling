@@ -74,7 +74,7 @@ Refer to `hybrid_system` function in `hybrid_system.py` for more details.
 
 The initial set of candidate solutions and sets of constraints are represented using matrix. The matrices are generated using given data from input files and through the process of matrix multiplication. The figure below shows three required matrices that are generated through `load()` function in `data.py`.
 
-<p align=center><img src="{{ site.BASE_PATH }}/docs/pics/matrices.png" width=70% height=70%></p>
+<p align=center><img src="https://github.com/rayjasson98/Hybrid-Genetic-Algorithm-Simulated-Annealing-for-Presentation-Scheduling/docs/pics/matrices.png" width=70% height=70%></p>
 <p align="center"><i>From left, slot-by-presentation matrix, presentation-by-presentation matrix and supervisor-by-preference matrix</i></p>
 
 The `slot-by-presentation` matrix is the chromosome in genetic algorithm and the candidate in simulated annealing. Other matrices are required by the penalty function for evaluation of penalty points. `0` indicates the slots are available, whereas `-1` indicates the slots are unavailable due to the hard constraints. When initializing the population, `1` indicates a presentation has been assigned to a specific slot.
