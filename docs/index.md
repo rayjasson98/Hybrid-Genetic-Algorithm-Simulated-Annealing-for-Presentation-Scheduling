@@ -5,10 +5,11 @@ layout: default
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling</title>
     <meta name="google-site-verification" content="Di5iGlRw_ZibJ0hmbv7MCgI8wnpTb6QbsO2OYIP7vQI" />
   </head>
-</html>
-
+<body>
+ 
 # Hybrid Genetic Algorithm-Simulated Annealing (HGASA) Algorithm for Presentation Scheduling
 *[Ray Jasson](mailto:holmesqueen2070@yahoo.com)*<br>
 *[Yi Qing](mailto:yiqing0519@gmail.com)*<br>
@@ -261,3 +262,6 @@ Run `hybrid_system.py`.
 - https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II
 - https://stackoverflow.com/a/8578980/10661805
 - http://sferics.idsia.ch/Files/ttcomp2002/results.htm
+
+</body>
+</html>
