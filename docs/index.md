@@ -63,7 +63,7 @@ There are 6 input files:
 
 Hybrid genetic algorithm-simulated annealing (HGASA) algorithm is the combination of genetic algorithm (GA) with simulated annealing as a local search method to accelerate the convergence speed. The figure below shows the flowchart of HGASA algorithm.
 
-<p align="center"><img src="pics/HGASA_Flowchart.png" width=70% height=70% /></p>
+<p align="center"><img src="./pics/HGASA_Flowchart.png" width=70% height=70% /></p>
 <p align="center"><i>Flowchart of HGASA algorithm</i></p>
 
 Refer to `hybrid_system` function in `hybrid_system.py` for more details.
