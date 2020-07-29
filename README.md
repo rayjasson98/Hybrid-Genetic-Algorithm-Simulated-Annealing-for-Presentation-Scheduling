@@ -274,7 +274,7 @@ Run `hybrid_system.py`.
 
 <br>
 
-## :black_nib: Reference
+## :black_nib: References
 
 - Luke, S. (2015, October). Essentials of Metaheuristics. Retrieved June 8, 2020, from https://cs.gmu.edu/~sean/book/metaheuristics/Essentials.pdf
 - Kohshori, M. S., & Abadeh, M. S. (2012, March). Hybrid Genetic Algorithms for University Course Timetabling. IJCSI International Journal of Computer Science, 9(2), 446-455.
