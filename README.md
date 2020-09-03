@@ -177,7 +177,7 @@ The initial temperature of simulated annealing is set to the difference between 
 3. **Penalty and Acceptance Probability**<br>
 The penalty of the newly generated neighbouring solution is computed and compared with the penalty of the candidate solution. The neighbouring solution is accepted if it is better than the candidate solution. In the case where there is no improvement, a random number, `R` that is uninformedly distributed between 0 and 1 is generated and the probability density function value, <i>e</i><sup>-<i>&delta;/T</i></sup> is calculated. If the probability density function value is higher than `R`, the neighbouring solution is accepted as the candidate solution to generate a new neighbouring solution.
 4. **Cooling Schedule**<br>
-An exponential cooling scheme (ECS) is used. The temperature decrement rule implemented is <i>T</i><sub><i>k</i> + 1</sub> = <i>&alpha;T<sub>k</sub></i> where &alpha is set to 0.9999, a value very close to 1. The temperature is decreased slowly and continuously.
+An exponential cooling scheme (ECS) is used. The temperature decrement rule implemented is <i>T</i><sub><i>k</i> + 1</sub> = <i>&alpha;T<sub>k</sub></i> where <i>&alpha;</i> is set to 0.9999, a value very close to 1. The temperature is decreased slowly and continuously.
 5. **Final Temperature**<br>
 The final temperature is the stopping condition. The final temperature is set to 0.0001 of the initial temperature.
 
